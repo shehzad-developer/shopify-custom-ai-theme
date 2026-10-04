@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection-banner",
+      "settings": {}
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {}
+    },
+    "zv-subcategories": {
+      "type": "zv-category-subcategories",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "zv-subcategories",
+    "product-grid"
+  ]
+}

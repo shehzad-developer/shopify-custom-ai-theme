@@ -1,0 +1,81 @@
+{% comment %}ZARVELLA product page: restored product media + product info. Only used by templates/product.json.{% endcomment %}
+<section class="zv-product">
+  <div class="zv-product__grid">
+    <div class="zv-product__media">
+      {% if product.media.size > 0 %}
+        <div class="zv-product__main-media">
+          {% assign first_media = product.media.first %}
+          {% case first_media.media_type %}
+            {% when 'image' %}
+              {{ first_media | image_url: width: 1400 | image_tag: loading: 'eager', class: 'zv-product__image', alt: first_media.alt | escape }}
+            {% when 'video' %}
+              {{ first_media | video_tag: controls: true, autoplay: false, loop: false, muted: false, class: 'zv-product__video' }}
+            {% when 'external_video' %}
+              {{ first_media | external_video_tag: class: 'zv-product__video' }}
+            {% when 'model' %}
+              {{ first_media | model_viewer_tag: class: 'zv-product__model' }}
+          {% endcase %}
+        </div>
+        {% if product.media.size > 1 %}
+          <div class="zv-product__thumbs">
+            {% for media in product.media %}
+              <a href="#zv-media-{{ media.id }}" class="zv-product__thumb" aria-label="View {{ product.title | escape }}">
+                {% if media.preview_image %}
+                  {{ media.preview_image | image_url: width: 220 | image_tag: loading: 'lazy', alt: media.alt | escape }}
+                {% endif %}
+              </a>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="zv-product__placeholder">No product image available</div>
+      {% endif %}
+    </div>
+    <div class="zv-product__info">
+      {% if product.vendor != blank %}<div class="zv-product__vendor">{{ product.vendor }}</div>{% endif %}
+      <h1 class="zv-product__title">{{ product.title }}</h1>
+      <div class="zv-product__price">
+        {% if product.compare_at_price > product.price %}
+          <span class="zv-product__price-current">{{ product.price | money }}</span>
+          <span class="zv-product__price-compare">{{ product.compare_at_price | money }}</span>
+        {% else %}<span>{{ product.price | money }}</span>{% endif %}
+      </div>
+      {% if product.description != blank %}<div class="zv-product__description rte">{{ product.description }}</div>{% endif %}
+      {% form 'product', product, class: 'zv-product__form' %}
+        {% unless product.has_only_default_variant %}
+          <div class="zv-product__options">
+            {% for option in product.options_with_values %}
+              <label class="zv-product__label" for="zv-option-{{ section.id }}-{{ forloop.index }}">{{ option.name }}</label>
+              <select id="zv-option-{{ section.id }}-{{ forloop.index }}" name="options[{{ option.name | escape }}]" class="zv-product__select">
+                {% for value in option.values %}<option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>{{ value }}</option>{% endfor %}
+              </select>
+            {% endfor %}
+          </div>
+        {% endunless %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <div class="zv-product__actions">
+          <label class="zv-product__label" for="zv-quantity-{{ section.id }}">Quantity</label>
+          <input id="zv-quantity-{{ section.id }}" class="zv-product__quantity" type="number" name="quantity" min="1" value="1">
+          <button type="submit" name="add" class="zv-product__button" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>{% if product.selected_or_first_available_variant.available %}Add to cart{% else %}Sold out{% endif %}</button>
+        </div>
+      {% endform %}
+      {% if product.media.size > 1 %}
+        <div class="zv-product__media-list">
+          {% for media in product.media offset: 1 %}
+            <div id="zv-media-{{ media.id }}" class="zv-product__extra-media">
+              {% case media.media_type %}
+                {% when 'image' %}{{ media | image_url: width: 1400 | image_tag: loading: 'lazy', class: 'zv-product__image', alt: media.alt | escape }}
+                {% when 'video' %}{{ media | video_tag: controls: true, class: 'zv-product__video' }}
+                {% when 'external_video' %}{{ media | external_video_tag: class: 'zv-product__video' }}
+                {% when 'model' %}{{ media | model_viewer_tag: class: 'zv-product__model' }}
+              {% endcase %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+<style>
+.zv-product{max-width:1200px;margin:0 auto;padding:36px 20px 60px}.zv-product__grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:start}.zv-product__media{min-width:0}.zv-product__main-media{background:rgb(var(--color-background));border-radius:12px;overflow:hidden}.zv-product__image{display:block;width:100%;height:auto;object-fit:contain}.zv-product__video,.zv-product__model{display:block;width:100%;max-height:720px;object-fit:contain;background:#111}.zv-product__thumbs{display:flex;gap:10px;margin-top:12px;overflow-x:auto}.zv-product__thumb{width:76px;height:76px;flex:0 0 76px;border:1px solid rgba(var(--color-foreground),.18);border-radius:8px;overflow:hidden}.zv-product__thumb img{width:100%;height:100%;object-fit:cover}.zv-product__info{min-width:0}.zv-product__vendor{font-size:1.2rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px;color:rgba(var(--color-foreground),.65)}.zv-product__title{margin:0 0 16px;font-size:clamp(2.8rem,5vw,4.8rem);line-height:1.08}.zv-product__price{font-size:2rem;font-weight:600;margin-bottom:26px}.zv-product__price-current{margin-right:12px}.zv-product__price-compare{text-decoration:line-through;opacity:.55;font-size:1.5rem}.zv-product__description{font-size:1.55rem;line-height:1.75;margin-bottom:28px}.zv-product__form{margin-top:20px}.zv-product__options{display:grid;gap:8px;margin-bottom:18px}.zv-product__label{font-size:1.2rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}.zv-product__select,.zv-product__quantity{width:100%;min-height:48px;border:1px solid rgba(var(--color-foreground),.25);background:rgb(var(--color-background));color:rgb(var(--color-foreground));padding:0 14px;border-radius:6px}.zv-product__actions{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:end}.zv-product__actions .zv-product__label{grid-column:1/-1}.zv-product__button{grid-column:2;min-height:50px;border:0;border-radius:6px;background:rgb(var(--color-foreground));color:rgb(var(--color-background));font-size:1.5rem;font-weight:600;cursor:pointer}.zv-product__button:disabled{opacity:.5;cursor:not-allowed}.zv-product__quantity{grid-column:1}.zv-product__media-list{display:none}.zv-product__placeholder{aspect-ratio:1/1;display:grid;place-items:center;background:rgba(var(--color-foreground),.05);color:rgba(var(--color-foreground),.6)}@media(max-width:749px){.zv-product{padding:18px 16px 45px}.zv-product__grid{display:flex;flex-direction:column;gap:26px}.zv-product__media{width:100%}.zv-product__title{font-size:3.2rem}.zv-product__description{font-size:1.45rem}}
+</style>

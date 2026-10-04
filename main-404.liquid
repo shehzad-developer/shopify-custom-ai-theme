@@ -1,0 +1,25 @@
+{% assign requested_path = request.path | default: '' %}
+{% assign requested_collection = requested_path | split: '/' | last | replace: '-', ' ' %}
+{% if requested_path contains '/collections/' and requested_collection != blank and requested_collection != 'collections' %}
+  <script>
+    (function () {
+      var target = {{ routes.search_url | json }} + '?q=' + encodeURIComponent({{ requested_collection | json }});
+      window.location.replace(target);
+    })();
+  </script>
+  <div class="template-404 page-width page-margin center">
+    <p>Collection not available.</p>
+    <h1 class="title">Searching for {{ requested_collection | escape }}</h1>
+    <a href="{{ routes.search_url }}?q={{ requested_collection | url_encode }}" class="button">View results</a>
+  </div>
+{% else %}
+  <style type="text/css">
+    .template-404 .title + * { margin-top: 1rem; }
+    @media screen and (min-width: 750px) { .template-404 .title + * { margin-top: 2rem; } }
+  </style>
+  <div class="template-404 page-width page-margin center">
+    <p>{{ 'templates.404.subtext' | t }}</p>
+    <h1 class="title">{{ 'templates.404.title' | t }}</h1>
+    <a href="{{ routes.all_products_collection_url }}" class="button">{{ 'general.continue_shopping' | t }}</a>
+  </div>
+{% endif %}

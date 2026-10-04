@@ -1,0 +1,179 @@
+{{ 'zarvella.css' | asset_url | stylesheet_tag }}
+<div id="ZVMain" class="zv-main zv-home">
+<style>
+  body:has(#ZVMain) .shopify-section-group-header-group,
+  body:has(#ZVMain) .shopify-section-group-footer-group { display:none !important; }
+  body:has(#ZVMain) #MainContent { margin:0; max-width:none; }
+</style>
+<div class="zv-site">
+  <div class="zv-topbar">◆ Free Shipping on Orders Over $50 &nbsp; ◆ New Arrivals Just Dropped &nbsp; ◆ Easy Returns</div>
+
+  <header class="zv-header">
+    <a href="/" class="zv-logo">ZARVELLA<span>MORE THAN JUST SHOPPING</span></a>
+    <nav class="zv-main-nav">
+      {% assign navgroups = "Women~women~Dresses|women-dresses,Tops & Blouses|women-tops-blouses,Shirts & T-Shirts|women-shirts-t-shirts,Trousers & Jeans|women-trousers-jeans,Skirts|women-skirts,Co-ords & Traditional Wear|women-co-ords-traditional-wear;Men~men~Suits & Formalwear|men-suits-formalwear,Shirts|men-shirts,T-Shirts & Polos|men-t-shirts-polos,Trousers & Jeans|men-trousers-jeans,Jackets & Coats|men-jackets-coats;Kids~kids~Girls’ Clothing|kids-girls-clothing,Boys’ Clothing|kids-boys-clothing,Baby & Toddler|kids-baby-toddler,Kids’ Accessories|kids-kids-accessories;Beauty & Cosmetics~beauty-cosmetics~Skincare|beauty-cosmetics-skincare,Makeup|beauty-cosmetics-makeup,Haircare|beauty-cosmetics-haircare,Perfumes|beauty-cosmetics-perfumes,Body Care|beauty-cosmetics-body-care,Beauty Tools & Accessories|beauty-cosmetics-beauty-tools-accessories;Bags~bags~Women Bags|bags-women-bags,Men Bags|bags-men-bags;Jewelry~jewelry~Necklaces|jewelry-necklaces,Earrings|jewelry-earrings,Bracelets|jewelry-bracelets,Rings|jewelry-rings,Jewelry Sets|jewelry-jewelry-sets;Watches~watches~Women’s Watches|watches-women-s-watches,Men’s Watches|watches-men-s-watches,Smart Watches|watches-smart-watches,Watch Accessories|watches-watch-accessories;Footwear~footwear~Women’s Heels|footwear-women-s-heels,Women’s Shoes|footwear-women-s-shoes,Men’s Shoes|footwear-men-s-shoes,Kids’ Footwear|footwear-kids-footwear;Home & Living~home-living~Living Room|home-living-living-room,Bedroom|home-living-bedroom,Kitchen & Dining|home-living-kitchen-dining,Home Décor|home-living-home-decor,Storage & Organization|home-living-storage-organization,Home & Household Accessories|home-living-home-household-accessories" | split: ";" %}
+      {% for group in navgroups %}
+        {% assign gp = group | split: "~" %}
+        {% assign subs = gp[2] | split: "," %}
+        <div class="zv-nav-item">
+          <a class="zv-nav-link" href="/collections/{{ gp[1] }}">{{ gp[0] }} <span>⌄</span></a>
+          <div class="zv-nav-menu">
+            <a class="zv-nav-all" href="/collections/{{ gp[1] }}">Shop All {{ gp[0] }} →</a>
+            {% for sub in subs %}
+              {% assign sub_parts = sub | split: '|' %}
+              {% assign sub_title = sub_parts[0] %}
+              {% assign sub_handle = sub_parts[1] %}
+              {% assign sub_collection = collections[sub_handle] %}
+              {% if sub_collection %}<a href="{{ sub_collection.url }}">{{ sub_title }}</a>{% else %}<a href="{{ routes.search_url }}?q={{ sub_title | url_encode }}">{{ sub_title }}</a>{% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    </nav>
+    <div class="zv-icons">
+  <a href="{{ routes.search_url }}" aria-label="Search">⌕</a>
+  <a href="{{ routes.account_url }}" aria-label="Account">♧</a>
+  <a href="{{ routes.cart_url }}" aria-label="Cart">🛍</a>
+</div>
+  </header>
+
+  <section class="zv-hero">
+    <div class="zv-hero-copy">
+      <span>FASHION • BEAUTY • LIFESTYLE • HOME</span>
+      <h2>Elegant Choices<br>For a <em>Beautiful You</em> ♡</h2>
+      <p>Premium products for a more beautiful everyday.</p>
+      <a class="zv-gold-btn" href="/collections/all">SHOP NOW <b>→</b></a>
+    </div>
+
+    <div class="zv-carousel" data-zv-carousel>
+      <div class="zv-carousel-stage">
+        <a class="zv-slide active" data-name="WOMEN" data-no="01" data-href="/collections/women" href="/collections/women">
+          <div class="zv-image zv-women"><img src="{{ 'cat-women.jpg' | asset_url }}" alt="Women luxury collection" loading="eager"><span class="zv-product-tag">01 / WOMEN</span></div>
+          <div class="zv-card-label">WOMEN <small>01</small></div>
+        </a>
+        <a class="zv-slide" data-name="MEN" data-no="02" data-href="/collections/men" href="/collections/men">
+          <div class="zv-image zv-men"><img src="{{ 'cat-men.jpg' | asset_url }}" alt="Men luxury collection" loading="eager"><span class="zv-product-tag">02 / MEN</span></div>
+          <div class="zv-card-label">MEN <small>02</small></div>
+        </a>
+        <a class="zv-slide" data-name="KIDS" data-no="03" data-href="/collections/kids" href="/collections/kids">
+          <div class="zv-image zv-kids"><img src="{{ 'cat-kids.jpg' | asset_url }}" alt="Kids luxury collection" loading="lazy"><span class="zv-product-tag">03 / KIDS</span></div>
+          <div class="zv-card-label">KIDS <small>03</small></div>
+        </a>
+        <a class="zv-slide" data-name="BEAUTY" data-no="04" data-href="/collections/beauty-cosmetics" href="/collections/beauty-cosmetics">
+          <div class="zv-image zv-beauty-cosmetics"><img src="{{ 'cat-beauty-cosmetics.jpg' | asset_url }}" alt="Beauty and cosmetics luxury collection" loading="lazy"><span class="zv-product-tag">04 / BEAUTY</span></div>
+          <div class="zv-card-label">BEAUTY <small>04</small></div>
+        </a>
+        <a class="zv-slide" data-name="BAGS" data-no="05" data-href="/collections/bags" href="/collections/bags">
+          <div class="zv-image zv-handbags-bags"><img src="{{ 'cat-handbags-bags.jpg' | asset_url }}" alt="Luxury handbags and bags collection" loading="lazy"><span class="zv-product-tag">05 / BAGS</span></div>
+          <div class="zv-card-label">BAGS <small>05</small></div>
+        </a>
+        <a class="zv-slide" data-name="JEWELRY" data-no="06" data-href="/collections/jewelry" href="/collections/jewelry">
+          <div class="zv-image zv-jewelry-accessories"><img src="{{ 'cat-jewelry-accessories.jpg' | asset_url }}" alt="Jewelry and accessories luxury collection" loading="lazy"><span class="zv-product-tag">06 / JEWELRY</span></div>
+          <div class="zv-card-label">JEWELRY <small>06</small></div>
+        </a>
+        <a class="zv-slide" data-name="WATCHES" data-no="07" data-href="/collections/watches" href="/collections/watches">
+          <div class="zv-image zv-watches-timepieces"><img src="{{ 'cat-watches-timepieces.jpg' | asset_url }}" alt="Luxury watches and timepieces collection" loading="lazy"><span class="zv-product-tag">07 / WATCHES</span></div>
+          <div class="zv-card-label">WATCHES <small>07</small></div>
+        </a>
+        <a class="zv-slide" data-name="FOOTWEAR" data-no="08" data-href="/collections/footwear" href="/collections/footwear">
+          <div class="zv-image zv-footwear"><img src="{{ 'cat-footwear.jpg' | asset_url }}" alt="Luxury footwear collection" loading="lazy"><span class="zv-product-tag">08 / FOOTWEAR</span></div>
+          <div class="zv-card-label">FOOTWEAR <small>08</small></div>
+        </a>
+        <a class="zv-slide" data-name="HOME & LIVING" data-no="09" data-href="/collections/home-living" href="/collections/home-living">
+          <div class="zv-image zv-home-kitchen"><img src="{{ 'cat-home-kitchen.jpg' | asset_url }}" alt="Home and kitchen collection" loading="lazy"><span class="zv-product-tag">09 / HOME & LIVING</span></div>
+          <div class="zv-card-label">HOME & LIVING <small>09</small></div>
+        </a>
+      </div>
+      <button class="zv-arrow left" data-prev aria-label="Previous">‹</button>
+      <button class="zv-arrow right" data-next aria-label="Next">›</button>
+      <div class="zv-carousel-caption"><b data-carousel-title>WOMEN</b><span data-carousel-no>01</span><a data-carousel-cta href="/collections/women">VIEW WOMEN →</a></div>
+    </div>
+  </section>
+
+  <section class="zv-categories">
+    <div class="zv-section-title"><span></span><h3>SHOP BY CATEGORY</h3><span></span><p>Everything you love, all in one place.</p></div>
+    <div class="zv-cat-grid">
+      {% assign cats = "Women|women,Men|men,Kids|kids,Beauty & Cosmetics|beauty-cosmetics,Bags|bags,Jewelry|jewelry,Watches|watches,Footwear|footwear,Home & Living|home-living" | split: "," %}
+      {% for item in cats %}
+        {% assign bits = item | split: "|" %}
+        {% assign main_collection = collections[bits[1]] %}
+        {% if main_collection %}<a class="zv-cat" href="{{ main_collection.url }}">{% else %}<a class="zv-cat" href="{{ routes.search_url }}?q={{ bits[0] | url_encode }}">{% endif %}
+          <div class="zv-cat-circle"><img src="{{ 'cat-' | append: bits[1] | append: '.jpg' | asset_url }}" alt="{{ bits[0] }}"><span>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span></div>
+          <strong>{{ bits[0] }}</strong>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="zv-subcategories" id="zv-subcategories">
+    <div class="zv-section-title"><span></span><h3>EXPLORE EVERY CATEGORY</h3><span></span><p>Choose a category to discover its collections.</p></div>
+    <div class="zv-subcat-grid">
+      {% assign groups = "Women~women~Dresses|women-dresses,Tops & Blouses|women-tops-blouses,Shirts & T-Shirts|women-shirts-t-shirts,Trousers & Jeans|women-trousers-jeans,Skirts|women-skirts,Co-ords & Traditional Wear|women-co-ords-traditional-wear;Men~men~Suits & Formalwear|men-suits-formalwear,Shirts|men-shirts,T-Shirts & Polos|men-t-shirts-polos,Trousers & Jeans|men-trousers-jeans,Jackets & Coats|men-jackets-coats;Kids~kids~Girls’ Clothing|kids-girls-clothing,Boys’ Clothing|kids-boys-clothing,Baby & Toddler|kids-baby-toddler,Kids’ Accessories|kids-kids-accessories;Beauty & Cosmetics~beauty-cosmetics~Skincare|beauty-cosmetics-skincare,Makeup|beauty-cosmetics-makeup,Haircare|beauty-cosmetics-haircare,Perfumes|beauty-cosmetics-perfumes,Body Care|beauty-cosmetics-body-care,Beauty Tools & Accessories|beauty-cosmetics-beauty-tools-accessories;Bags~bags~Women Bags|bags-women-bags,Men Bags|bags-men-bags;Jewelry~jewelry~Necklaces|jewelry-necklaces,Earrings|jewelry-earrings,Bracelets|jewelry-bracelets,Rings|jewelry-rings,Jewelry Sets|jewelry-jewelry-sets;Watches~watches~Women’s Watches|watches-women-s-watches,Men’s Watches|watches-men-s-watches,Smart Watches|watches-smart-watches,Watch Accessories|watches-watch-accessories;Footwear~footwear~Women’s Heels|footwear-women-s-heels,Women’s Shoes|footwear-women-s-shoes,Men’s Shoes|footwear-men-s-shoes,Kids’ Footwear|footwear-kids-footwear;Home & Living~home-living~Living Room|home-living-living-room,Bedroom|home-living-bedroom,Kitchen & Dining|home-living-kitchen-dining,Home Décor|home-living-home-decor,Storage & Organization|home-living-storage-organization,Home & Household Accessories|home-living-home-household-accessories" | split: ";" %}
+      {% for group in groups %}
+        {% assign gp = group | split: "~" %}
+        {% assign subs = gp[2] | split: "," %}
+        <article class="zv-subcat-card">
+          {% assign group_collection = collections[gp[1]] %}
+          {% if group_collection %}<a class="zv-subcat-heading" href="{{ group_collection.url }}">{% else %}<a class="zv-subcat-heading" href="{{ routes.search_url }}?q={{ gp[0] | url_encode }}">{% endif %}<span>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span><strong>{{ gp[0] }}</strong><b>VIEW ALL →</b></a>
+          <div class="zv-subcat-links">
+            {% for sub in subs %}
+              {% assign sub_parts = sub | split: '|' %}
+              {% assign sub_title = sub_parts[0] %}
+              {% assign sub_handle = sub_parts[1] %}
+              {% assign sub_collection = collections[sub_handle] %}
+              {% if sub_collection %}<a href="{{ sub_collection.url }}">{{ sub_title }}</a>{% else %}<a href="{{ routes.search_url }}?q={{ sub_title | url_encode }}">{{ sub_title }}</a>{% endif %}
+            {% endfor %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="zv-benefits">
+    <div><b>◇</b><strong>Quality Products</strong><span>Carefully selected</span></div>
+    <div><b>✦</b><strong>Fast Shipping</strong><span>On orders over $50</span></div>
+    <div><b>⌁</b><strong>Secure Payments</strong><span>Shop with confidence</span></div>
+    <div><b>↩</b><strong>Easy Returns</strong><span>Hassle-free process</span></div>
+  </section>
+
+  <section class="zv-arrivals">
+    <div class="zv-arrivals-copy">
+      <span>FRESH STYLES • NEW FAVORITES</span>
+      <h3>New<br><em>Arrivals</em></h3>
+      <a class="zv-gold-btn" href="/collections/all">SHOP NOW →</a>
+    </div>
+    <div class="zv-product-scene"><div class="scene-bag">ZV</div><div class="scene-bottle"></div><i>Style<br>Your Story ♡</i></div>
+  </section>
+
+  <section class="zv-reviews">
+    <div class="zv-section-title"><span></span><h3>WHAT OUR CUSTOMERS SAY</h3><span></span><p>Real people Real experiences</p></div>
+    <div class="zv-review-grid">
+      <article><div>★★★★★</div><p>Amazing quality and super fast delivery Will definitely shop again</p><b>Olivia M</b><small>Verified Customer London UK</small></article>
+      <article><div>★★★★★</div><p>Beautiful products and excellent customer service Everything felt premium</p><b>Emma R</b><small>Verified Customer Manchester UK</small></article>
+      <article><div>★★★★★</div><p>Loved my order Great prices elegant packaging and highly recommended</p><b>Sophia K</b><small>Verified Customer New York USA</small></article>
+      <article><div>★★★★★</div><p>The quality exceeded my expectations I will absolutely be ordering again</p><b>Mia J</b><small>Verified Customer Los Angeles USA</small></article>
+    </div>
+  </section>
+
+  <section class="zv-newsletter"><div class="zv-mail-icon">✉</div><h3>Join Our Community</h3><p>Get exclusive offers, new arrivals and more.</p>{% form 'customer', class: 'zv-newsletter-form' %}
+  <input type="hidden" name="contact[tags]" value="newsletter">
+  <input type="email" name="contact[email]" placeholder="Enter your email address" required autocomplete="email">
+  <button type="submit">SUBSCRIBE</button>
+{% endform %}</section>
+
+  <section class="zv-replay"><button type="button" data-replay-experience>↻ REPLAY ZARVELLA EXPERIENCE</button></section>
+
+  <footer class="zv-footer">
+    <div class="zv-footer-brand">ZARVELLA<span>MORE THAN JUST SHOPPING</span></div>
+    <div class="zv-social">Instagram · Facebook · TikTok · Pinterest · YouTube</div>
+    <div class="zv-footer-cols"><div><b>Shop</b><a>All Products</a><a>New Arrivals</a><a>Best Sellers</a><a>Sale</a></div><div><b>About</b><a>Our Story</a><a>Contact Us</a><a>Blog</a></div><div><b>Customer Care</b><a>FAQs</a><a>Shipping & Delivery</a><a>Returns & Refunds</a><a>Size Guide</a></div><div><b>Policies</b><a>Privacy Policy</a><a>Terms & Conditions</a><a>Refund Policy</a></div></div>
+    <div class="zv-pay">VISA · Mastercard · PayPal &nbsp;&nbsp; Apple Pay · Google Pay</div>
+    <div class="zv-copy">© 2026 ZARVELLA. All rights reserved.</div>
+  </footer>
+</div>
+</div>
+<script src="{{ 'zarvella.js' | asset_url }}" defer></script>
+
+{% schema %}
+{"name":"Main Home","settings":[],"presets":[{"name":"Main Home"}]}
+{% endschema %}

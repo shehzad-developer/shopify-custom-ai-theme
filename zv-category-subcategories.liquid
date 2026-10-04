@@ -1,0 +1,39 @@
+{% assign main_handle = collection.handle %}
+{% case main_handle %}
+{% when 'women' %}{% assign subcats = "Dresses|women-dresses|cat-women.jpg,Tops & Blouses|women-tops-blouses|cat-women.jpg,Shirts & T-Shirts|women-shirts-t-shirts|cat-women.jpg,Trousers & Jeans|women-trousers-jeans|cat-women.jpg,Skirts|women-skirts|cat-women.jpg,Co-ords & Traditional Wear|women-co-ords-traditional-wear|cat-women.jpg" | split: ',' %}
+{% when 'men' %}{% assign subcats = "Suits & Formalwear|men-suits-formalwear|cat-men.jpg,Shirts|men-shirts|cat-men.jpg,T-Shirts & Polos|men-t-shirts-polos|cat-men.jpg,Trousers & Jeans|men-trousers-jeans|cat-men.jpg,Jackets & Coats|men-jackets-coats|cat-men.jpg" | split: ',' %}
+{% when 'kids' %}{% assign subcats = "Girls’ Clothing|kids-girls-clothing|cat-kids.jpg,Boys’ Clothing|kids-boys-clothing|cat-kids.jpg,Baby & Toddler|kids-baby-toddler|cat-kids.jpg,Kids’ Accessories|kids-kids-accessories|cat-kids.jpg" | split: ',' %}
+{% when 'beauty-cosmetics' %}{% assign subcats = "Skincare|beauty-cosmetics-skincare|cat-beauty-cosmetics.jpg,Makeup|beauty-cosmetics-makeup|cat-beauty-cosmetics.jpg,Haircare|beauty-cosmetics-haircare|cat-beauty-cosmetics.jpg,Perfumes|beauty-cosmetics-perfumes|cat-beauty-cosmetics.jpg,Body Care|beauty-cosmetics-body-care|cat-beauty-cosmetics.jpg,Beauty Tools & Accessories|beauty-cosmetics-beauty-tools-accessories|cat-beauty-cosmetics.jpg" | split: ',' %}
+{% when 'bags' %}{% assign subcats = "Women Bags|bags-women-bags|cat-handbags-bags.jpg,Men Bags|bags-men-bags|cat-handbags-bags.jpg" | split: ',' %}
+{% when 'jewelry' %}{% assign subcats = "Necklaces|jewelry-necklaces|cat-jewelry-accessories.jpg,Earrings|jewelry-earrings|cat-jewelry-accessories.jpg,Bracelets|jewelry-bracelets|cat-jewelry-accessories.jpg,Rings|jewelry-rings|cat-jewelry-accessories.jpg,Jewelry Sets|jewelry-jewelry-sets|cat-jewelry-accessories.jpg" | split: ',' %}
+{% when 'watches' %}{% assign subcats = "Women’s Watches|watches-women-s-watches|cat-watches-timepieces.jpg,Men’s Watches|watches-men-s-watches|cat-watches-timepieces.jpg,Smart Watches|watches-smart-watches|cat-watches-timepieces.jpg,Watch Accessories|watches-watch-accessories|cat-watches-timepieces.jpg" | split: ',' %}
+{% when 'footwear' %}{% assign subcats = "Women’s Heels|footwear-women-s-heels|cat-footwear.jpg,Women’s Shoes|footwear-women-s-shoes|cat-footwear.jpg,Men’s Shoes|footwear-men-s-shoes|cat-footwear.jpg,Kids’ Footwear|footwear-kids-footwear|cat-footwear.jpg" | split: ',' %}
+{% when 'home-living' %}{% assign subcats = "Living Room|home-living-living-room|cat-home-kitchen.jpg,Bedroom|home-living-bedroom|cat-home-kitchen.jpg,Kitchen & Dining|home-living-kitchen-dining|cat-home-kitchen.jpg,Home Décor|home-living-home-decor|cat-home-kitchen.jpg,Storage & Organization|home-living-storage-organization|cat-home-kitchen.jpg,Home & Household Accessories|home-living-home-household-accessories|cat-home-kitchen.jpg" | split: ',' %}
+{% endcase %}
+
+{% if subcats != blank %}
+<section class="zv-subcats">
+  <div class="zv-subcats__inner">
+    <h2 class="zv-subcats__title">Shop {{ collection.title | escape }}</h2>
+    <div class="zv-subcats__grid">
+      {% for item in subcats %}
+        {% assign parts = item | split: '|' %}
+        <a class="zv-subcat" href="/collections/{{ parts[1] }}">
+          <span class="zv-subcat__image-wrap">
+            <img class="zv-subcat__image" src="{{ parts[2] | asset_url }}" alt="{{ parts[0] | escape }}" loading="lazy">
+          </span>
+          <span class="zv-subcat__name">{{ parts[0] }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<style>
+.zv-subcats{padding:28px 20px 36px}.zv-subcats__inner{max-width:1400px;margin:0 auto}.zv-subcats__title{text-align:center;margin:0 0 22px;font-size:clamp(22px,2.5vw,32px);font-weight:600}.zv-subcats__grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:24px 18px}.zv-subcat{text-decoration:none;color:inherit;text-align:center;display:block}.zv-subcat__image-wrap{display:block;width:min(150px,100%);aspect-ratio:1/1;margin:0 auto 11px;border-radius:50%;overflow:hidden;border:2px solid rgba(201,169,110,.75);box-shadow:0 7px 22px rgba(0,0,0,.12);background:#f4f1e9}.zv-subcat__image{width:100%;height:100%;display:block;object-fit:cover}.zv-subcat__name{display:block;font-size:14px;line-height:1.3;font-weight:600;padding:0 4px}@media(max-width:700px){.zv-subcats{padding:22px 12px 30px}.zv-subcats__grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 10px}.zv-subcat__image-wrap{width:min(112px,100%) }.zv-subcat__name{font-size:12px}}
+</style>
+
+{% schema %}
+{"name":"ZARVELLA Subcategories","settings":[],"presets":[{"name":"ZARVELLA Subcategories"}]}
+{% endschema %}

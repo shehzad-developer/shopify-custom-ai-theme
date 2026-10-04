@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "zarvella_intro": {
+      "type": "zarvella-intro",
+      "settings": {}
+    },
+    "zarvella_home": {
+      "type": "zarvella-home",
+      "settings": {}
+    }
+  },
+  "order": [
+    "zarvella_intro",
+    "zarvella_home"
+  ]
+}
