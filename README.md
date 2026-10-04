@@ -13,7 +13,7 @@ Experience the fully functional store interface live here:
 ### 🖥️ Desktop Homepage View
 ![Store Homepage](screenshot1.png)
 
-### 📱 Mobile Responsive View
+### 📱 heel category View
 ![Product Page Mobile](screenshot2.png)
 
 ---
