@@ -29,4 +29,3 @@ Experience the fully functional store interface live here:
 * **HTML5 / CSS3 / JavaScript**
 * **AI Tooling** (Prompt Engineering, Code Refinement & Debugging)
 * **Git / GitHub** (Version Control & Repository Management)
-*
